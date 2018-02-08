@@ -1,3 +1,4 @@
-div.wrapper
-    p.hello Hello!
-    span#yo YOOO!
+extends layout
+
+block content
+    h2 Sale end #{h.moment().endOf('day').fromNow()}
