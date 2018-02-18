@@ -37,7 +37,7 @@ const storeSchema = new mongoose.Schema({
   photo: String
 });
 
-storeSchema.pre("save", async function(next) {
+storeSchema.pre("save", async function (next) {
   if (!this.isModified("name")) {
     next();
     return;
