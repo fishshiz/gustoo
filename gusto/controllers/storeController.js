@@ -51,15 +51,25 @@ exports.getStores = async (req, res) => {
 }
 
 exports.getStore = async (req, res, next) => {
-    const store = await Store.findOne({ slug: req.params.slug })
+    const store = await Store.findOne({ slug: req.params.slug }).populate('author');
     if(!store) return next();
     res.render('store', { store });
 }
 
+const confirmOwner = (store, user) => {
+  if (!store.author.equals(user._id)) {
+    throw Error("You must own a store in order to edit it!");
+  }
+};
+
 exports.editStore = async (req, res) => {
-    const store = await Store.findOne({ _id: req.params.id });
-    res.render('editStore', { title: `Edit ${store.name}`, store});
-}
+  // 1. Find the store given the ID
+  const store = await Store.findOne({ _id: req.params.id });
+  // 2. confirm they are the owner of the store
+  confirmOwner(store, req.user);
+  // 3. Render out the edit form so the user can update their store
+  res.render("editStore", { title: `Edit ${store.name}`, store });
+};
 
 exports.updateStore = async (req, res) => {
     req.body.location.type = 'Point';
