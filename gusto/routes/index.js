@@ -3,6 +3,7 @@ const router = express.Router();
 const storeController = require("../controllers/storeController");
 const userController = require("../controllers/userController");
 const authController = require("../controllers/authController");
+const reviewController = require("../controllers/reviewController");
 const { catchErrors } = require("../handlers/errorHandlers");
 
 router.get("/", catchErrors(storeController.getStores));
@@ -48,6 +49,7 @@ router.post(
 );
 router.get('/map', storeController.mapPage);
 router.get('/hearts', authController.checkLogin, catchErrors(storeController.listHearts));
+router.post('/reviews/:id', authController.checkLogin, catchErrors(reviewController.addReview));
 
 // API endpoints
 
