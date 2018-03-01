@@ -1,6 +1,6 @@
 function autocomplete(input, latInput, lngInput) {
     if(!input) return;
-    const dropdown = new google.maps.places.Autocomplete(input);
+    const dropdown = client.geocodeForward(input);
 
     dropdown.addListener('place_changed', () => {
         const place = dropdown.getPlace();

@@ -4,6 +4,7 @@ html
     title= `${title} | ${h.siteName}`
     link(rel='stylesheet', href='/dist/style.css')
     link(rel="shortcut icon" type="image/png" href="/images/icons/doughnut.png")
+    link(href='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet')
     meta(name="viewport" content="width=device-width, initial-scale=1")
   body
     block header
@@ -50,5 +51,6 @@ html
       block content
         p This is the default content.
     block scripts
-      script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)
+      //- script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE}&libraries=places`)
+      script(src="https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js")
       script(src="/dist/App.bundle.js")

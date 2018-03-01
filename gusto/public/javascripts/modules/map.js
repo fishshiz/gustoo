@@ -2,10 +2,7 @@ import axios from 'axios';
 import { $ } from './bling';
 
 const mapOptions = {
-  center: {
-    lat: 43.2,
-    lng: -79.8
-  },
+  center: [43.2, -79.8],
   zoom: 8
 };
 
@@ -18,13 +15,13 @@ function loadPlaces(map, lat=43.2, lng=-79.8) {
             return;
         }
 
-        const bounds = new google.maps.LatLngBounds();
+        
         const infoWindow = new google.maps.InfoWindow();
         
         const markers = places.map(place => {
             const [placeLng, placeLat] = place.location.coordinates;
             const position = { lat: placeLat, lng: placeLng };
-            bounds.extend(position);
+            
             const marker = new google.maps.Marker({ map, position });
             marker.place = place;
             return marker;
@@ -52,9 +49,11 @@ function loadPlaces(map, lat=43.2, lng=-79.8) {
 function makeMap(mapDiv) {
     if(!mapDiv) return;
 
-    const map = new google.maps.Map(mapDiv, mapOptions);    
+    const map = new mapboxgl.Map({
+        mapOptions
+    });    
     loadPlaces(map);
-    const input = $('[name="geolocate');
+    const input = $('[name="geolocate"]');
     const autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace();

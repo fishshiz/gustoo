@@ -964,7 +964,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 function autocomplete(input, latInput, lngInput) {
     if (!input) return;
-    var dropdown = new google.maps.places.Autocomplete(input);
+    var dropdown = client.geocodeForward(input);
 
     dropdown.addListener('place_changed', function () {
         var place = dropdown.getPlace();
@@ -1039,10 +1039,7 @@ var _bling = __webpack_require__(1);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapOptions = {
-    center: {
-        lat: 43.2,
-        lng: -79.8
-    },
+    center: [43.2, -79.8],
     zoom: 8
 };
 
@@ -1057,7 +1054,6 @@ function loadPlaces(map) {
             return;
         }
 
-        var bounds = new google.maps.LatLngBounds();
         var infoWindow = new google.maps.InfoWindow();
 
         var markers = places.map(function (place) {
@@ -1066,7 +1062,7 @@ function loadPlaces(map) {
                 placeLat = _place$location$coord[1];
 
             var position = { lat: placeLat, lng: placeLng };
-            bounds.extend(position);
+
             var marker = new google.maps.Marker({ map: map, position: position });
             marker.place = place;
             return marker;
@@ -1088,9 +1084,11 @@ function loadPlaces(map) {
 function makeMap(mapDiv) {
     if (!mapDiv) return;
 
-    var map = new google.maps.Map(mapDiv, mapOptions);
+    var map = new mapboxgl.Map({
+        mapOptions: mapOptions
+    });
     loadPlaces(map);
-    var input = (0, _bling.$)('[name="geolocate');
+    var input = (0, _bling.$)('[name="geolocate"]');
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
