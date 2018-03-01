@@ -39,13 +39,16 @@ exports.validateRegister = (req, res, next) => {
 };
 
 exports.register = async (req, res, next) => {
-  const user = new User({
-    email: req.body.email,
-    name: req.body.name
-  });
+  const user = new User({ email: req.body.email, name: req.body.name });
   const register = promisify(User.register, User);
-  await register(user, req.body.password);
-  next();
+  try {
+    await register(user, req.body.password);
+    next();
+  } catch (e) {
+    backURL = req.header("Referer");
+    req.flash("error", e.message);
+    res.redirect('back');
+  }
 };
 
 exports.account = (req, res) => {
@@ -67,5 +70,5 @@ exports.updateAccount = async (req, res) => {
       context: "query"
     }
   );
-  res.redirect('back');
+  res.redirect("back");
 };
