@@ -143,8 +143,8 @@ exports.mapStores = async (req, res) => {
 };
 
 exports.mapPage = (req, res) => {
-    res.render('map', { title: 'Map' });
-}
+  res.render("map", { title: "Map" });
+};
 
 exports.heartStore = async (req, res) => {
   const hearts = req.user.hearts.map(obj => obj.toString());
@@ -154,5 +154,12 @@ exports.heartStore = async (req, res) => {
     { [operator]: { hearts: req.params.id } },
     { new: true }
   );
-  res.json(user);
+  res.json(req.user)
+};
+
+exports.listHearts = async (req, res) => {
+  const heartedStores = await Store.find({
+    _id: { $in: req.user.hearts }
+  });
+  res.render('stores', { title: 'Favorites', stores: heartedStores });
 };
