@@ -4,7 +4,8 @@ html
     title= `${title} | ${h.siteName}`
     link(rel='stylesheet', href='/dist/style.css')
     link(rel="shortcut icon" type="image/png" href="/images/icons/doughnut.png")
-    link(href='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet')
+    link(href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet')
+    link(rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.1/mapbox-gl-geocoder.css' type='text/css')
     meta(name="viewport" content="width=device-width, initial-scale=1")
   body
     block header
@@ -51,6 +52,24 @@ html
       block content
         p This is the default content.
     block scripts
-      //- script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE}&libraries=places`)
-      script(src="https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js")
+      style.
+        .marker {
+          background-image: url('/images/icons/doughnut.png');
+          background-size: cover;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+        .mapboxgl-popup {
+          max-width: 200px;
+        }
+        .mapboxgl-popup-content {
+          text-align: center;
+          font-family: 'Open Sans', sans-serif;
+        }
+      script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)
       script(src="/dist/App.bundle.js")
+      script
+        mapboxgl.accessToken = process.env.MAP_BOX
+  

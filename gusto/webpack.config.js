@@ -15,6 +15,7 @@ const autoprefixer = require('autoprefixer');
 // This is our JavaScript rule that specifies what to do with .js files
 const javascript = {
   test: /\.(js)$/, // see how we match anything that ends in `.js`? Cool
+  exclude: /(node_modules)/,
   use: [{
     loader: 'babel-loader',
     options: { presets: ['env'] } // this is one way of passing options
