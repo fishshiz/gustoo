@@ -11,11 +11,10 @@
   "scripts": {
     "start": "node ./start.js",
     "watch": "nodemon ./start.js --ignore public/",
-    "dev": "concurrently \"npm run watch\" \"npm run assets\" --names \"💻,📦\" --prefix name",
+    "dev": "concurrently 'npm run watch' 'npm run assets' --names '💻,📦' --prefix name",
     "assets": "webpack -w --display-max-modules 0",
     "sample": "node ./data/load-sample-data.js",
-    "blowitallaway": "node ./data/load-sample-data.js --delete",
-    "now": "now -e DB_USER=@db_user -e DB_PASS=@db_pass -e NODE_ENV=\"production\" -e PORT=80"
+    "blowitallaway": "node ./data/load-sample-data.js --delete"
   },
   "browserslist": "last 3 versions",
   "dependencies": {
@@ -34,7 +33,7 @@
     "forever": "0.15.3",
     "glob": "7.1.1",
     "html-to-text": "3.2.0",
-    "jimp": "0.2.27",
+    "jimp": "0.2.27", 
     "juice": "4.0.2",
     "mapbox-gl": "^0.44.1",
     "mapbox-gl-geocoder": "^2.0.1",
